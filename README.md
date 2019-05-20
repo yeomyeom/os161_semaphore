@@ -1,39 +1,18 @@
 # os161_semaphore
-
 tip> os161을 설치시 그리고 os161 설치후 sys161 kern 입력시 harvd-mips-머신이 없다는 오류 메시지가 나온다면<br>
 os161을 설치한 디렉토리 내부 모든 디렉토리와 파일들의 권한을 7XX로 올려주자.<br>
 sudo chmod -R 744 [os161설치 디렉토리 경로]<br>
 권한때문에 문제가 생기는 것 같은데 어느 곳에서 나는지 모르니 모든 내부 디렉토리와 파일의 권한을 상승시켜보자<br><br>
 os161운영체제에서 ~/os161/src/kern/test/synchtest.c 파일에 주석을 달아 보았다.<br>
-
 synchtest.c 코드를 간단하게 보자면 
 <pre><code>
-static
-void
-inititems(void)
-{
-	if (testsem==NULL) {
-		testsem = sem_create("testsem", 2);
-		if (testsem == NULL) {
-			panic("synchtest: sem_create failed\n");
-		}
-	}
-	if (donesem==NULL) {
-		donesem = sem_create("donesem", 0);
-		if (donesem == NULL) {
-			panic("synchtest: sem_create failed\n");
-		}
-	}
-}
 int
 semtest(int nargs, char **args)	//sys161 kernel 실행 이후 sy1을 입력하면 실행되는 함수
 {
 	int i, result;
-
 	(void)nargs;
 	(void)args;
-
-	inititems();
+	inititems();		//testsem = sem_create("testsem", 2);
 	kprintf("Starting semaphore test...\n");
 	kprintf("If this hangs, it's broken: ");
 	P(testsem);		//testsem의 sem_count를 0으로 만드는 이유
