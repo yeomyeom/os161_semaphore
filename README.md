@@ -24,7 +24,7 @@ semtest(int nargs, char **args)	//sys161 kernel 실행 이후 sy1을 입력하�
 	이 프로그램의 작성자의 의도는 이런것을 원하는 것이 아니라 동시실행 되어 스레드가 막 뒤섞이는 것을 원하므로
 	스레드 생성 전에 스레드 실행을 막고(sem_count를 0으로 만들고)
 	*/
-	for (i=0; i<NTHREADS; i++) {
+	for (i=0; i NTHREADS; i++) {
 		result = thread_fork("carsem", NULL, car, NULL, i);
 		if (result) {
 			panic("semtest: thread_fork failed: %s\n",
@@ -36,7 +36,7 @@ semtest(int nargs, char **args)	//sys161 kernel 실행 이후 sy1을 입력하�
 	스레드를 미리 전부 다 생성해 놓고 밑에 있는 for loop 안에 V(carsem)을 하여 실행 하게 된다. 이때 대기중이던 스레드중
 	1개가 실행된다.(OS 스케줄러에 따라서 실행된다. FIFO일 수도 있고 다른것일 수도 있고) 
 	*/
-	for (i=0; i<NTHREADS; i++) {
+	for (i=0; i NTHREADS; i++) {
 		V(carsem);
 		P(cardone);
 	}
